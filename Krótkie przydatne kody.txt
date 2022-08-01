@@ -1,0 +1,193 @@
+DOKUMANTACJA C
+
+https://cpp0x.pl/dokumentacja/standard-C/1
+
+__________________________________________
+
+GIKIDLAGIKÓW poradnik C
+
+https://www.geeksforgeeks.org/c-programming-language/?ref=ghm
+
+_____________________________________________________________________________________
+Poitery Alokacja Pamiec Stack Heap :wytłumaczone
+https://www.youtube.com/watch?v=_8-ht2AKyH4
+_______________________________________________________________________________________
+
+printf skróty:
+
+unsigned int ("%u"
+
+long long ("%lld"
+
+unsigned long long ("%llu" -- Kiedy sie przydaje? sizeof() Czemu? Bo sizeof() 64 bit unsigned int czyli llu :)
+
+float x = 1.43333
+
+printf("%.2f",x)    //wynik: 1.43
+printf("%.3f",x)    //wynik: 1.433
+
+x = 1234
+
+printf("%d",x)    //wynik: |1234    |
+printf("%8d",x)   //wynik: |    1234|s
+printf("%08d",x)  //wynik: |00001234|
+
+printf("%x",x)    //wynik: 4d2
+printf("%X",x)    //wynik: 4D2
+printf("%#X",x)   //wynik: 0x4D2
+
+printf("%p",x)    //wynik: adres x
+
+______________________________________________________________________________________
+
+Jaka jest roznica między char* a = "..."   A  char a[] = "..."
+
+char* a = "Hello, World!"; //Works
+char b[] = "Hello, World!"; //Works also
+
+strcpy(a, "Hello!"); //Segmentation fault  //nie dziala bo NIE definiujemy tu na nowo a tylko probujemy edytowac pamiec ktora moze byc READ ONLY
+strcpy(b, "Haha!!"); //Works..
+
+char* a = "Haha"; //works
+a = "LOL"; //works..         ///dziala bo nie Edytujemy w zaden sposob pamieci, ktorej na ktora wsakzuje ten wskaznik (A TA MOZE BYC READ ONLY)
+			     //to co tu robimy to definiowanie na nowo a
+
+https://stackoverflow.com/questions/16692887/difference-between-array-and-pointer]
+
+___________________________________________________________________________________
+
+ŹLE, NIE DZIALA:
+
+int main(int argc, char **argv)
+{
+     char *test = (char*) malloc(12*sizeof(char));
+     test = "testingonly";
+     free(test);
+}
+
+DOBRZE, DZIALA:
+
+int main(int argc, char **argv)
+{
+     char *test = (char*) malloc(12*sizeof(char));
+     strcpy(test, "testingonly");
+     free(test);
+}
+
+https://stackoverflow.com/questions/8600181/allocate-memory-and-save-string-in-c
+______________________________________________________________________________________
+
+Memory Padding : Dopełnianie ilości pamięci zarezerwowanej przez struktury do wartości wygodniejszej dla kompilatora
+wytłumaczenie:
+
+https://bulldogjob.pl/readme/wyrownanie-pamieci-w-strukturach-c
+
+_______________________________________________________________________________________
+
+STATC INT i zmienne statyczne po co i kiedy uzwyac:
+
+https://stackoverflow.com/questions/572547/what-does-static-mean-in-c
+
+________________________________________________________________________________________
+
+dobra obsługa printf
+
+https://www.tutorialspoint.com/c_standard_library/c_function_printf.htm
+
+_______________________________________________________________________________________
+
+Różnica między wskażnikiem na funkcje, który zwraca int A funkcją która zwraca wskaźnik na int
+
+int(*function)(int,int)
+int*function(int,int)
+
+________________________________________________________________________________________
+
+Czy można dodac/mnozyc/dzielic wskazniki? NIE czy mozna odjac wskazniki? TAK
+
+https://www.youtube.com/watch?v=OJM2FZSMQp8
+
+_______________________________________________________________________________________
+
+TYPEDEF - nazywanie sktórowo typów
+
+np.
+
+typedef unsigned long long DUZYINT;
+
+typedef struct PUNKT
+{
+int X,Y;
+}PUNKT;
+
+//to samo: typedef struct PUNKT PUNKT // -> to znaczy ze w programie tekst "PUNNKT" jest zastepowamy przez "struct PUNKT"
+
+
+int main
+{
+DUZYINT liczba = 640430;
+
+PUNKT P;
+
+p.X=6;
+p.Y=7;
+
+}
+
+___________________________________________________________________________________________
+
+Jaka jest różnica między
+
+char a[] = "string";
+char *p = "string";
+
+ba są wyraźnie różne, na początek:
+
+pierwszy tworzy wskaźnik.
+drugi tworzy tablicę.
+Czytaj dalej, aby uzyskać bardziej szczegółowe wyjaśnienie:
+
+Wersja tablicy:
+char a[] = "string";  
+Tworzy tablicę, która jest wystarczająco duża, aby utrzymać ciąg znaków literalny "string", w tym jego NULL terminator. Tablica string jest inicjalizowana ciągiem znaków "string". tablica może zostać zmodyfikowana w późniejszym czasie . Również rozmiar tablicy jest znany nawet w czasie kompilacji, więc sizeof operator może być użyty do określenia jego wielkości.
+
+Wersja wskaźnika:
+char *p  = "string"; 
+Tworzy wskaźnik wskazujący na ciąg znaków "string". Jest to szybsze niż wersja tablicy, ale string wskazywany przez wskaźnik nie powinien być zmieniono , ponieważ znajduje się w pamięci zdefiniowanej tylko do odczytu. Modyfikowanie takiego ciągu literalnego skutkuje niezdefiniowanym zachowaniem.
+
+W rzeczywistości C++03 deprecates [Ref 1] use of string literal without the const keyword. Więc deklaracja powinna brzmieć:
+
+const char *p = "string";
+Ponadto,musisz użyć funkcji strlen(), a nie sizeof, aby znaleźć Rozmiar łańcucha, ponieważ operator sizeof po prostu da ci rozmiar wskaźnika zmienna.
+
+Która wersja jest lepsza i której mam użyć?
+Zależy od użycia.
+
+jeśli nie musisz wprowadzać żadnych zmian w łańcuchu, użyj wersji wskaźnika.
+jeśli chcesz zmienić dane, użyj wersji tablicy.
+
+_______________________________________________________________________________________
+
+
+Różnica między: char *(arr[5]) A char (*arr)[5]
+
+char *(arr[5]) equals to char *arr[5] and it means you have array of pointers
+ that each of them points to a character so arr[0] can points to a character and
+ arr[1] can points to a character and so on. For example you can write your code like this:
+
+char *(arr[5]);// or char *arr[5]
+char a = 'a',b='b',c='c';
+arr[0] = &a;
+arr[1] = &b;
+arr[2] = &c;    
+printf("a=%c b=%c c=%c \n",*arr[0],*arr[1],*arr[2]);
+
+But (*arr)[5] means you have an array of 5 characters and you want to point it.
+For example you can write your code like this:
+
+char (*arr)[5];
+char str[5] = "Hell";
+arr = &str;
+printf("%s\n",*arr);
+_________________________________________________________________________________________
+
