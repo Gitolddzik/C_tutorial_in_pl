@@ -2,12 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
 void intiger_func(int intiger)
 {
 	
 	++intiger;
 	//*ptr++; nie dziala 
 }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
 
 void intiger_ref_func(int* intiger_ref)
 {
@@ -16,10 +21,16 @@ void intiger_ref_func(int* intiger_ref)
 	//*ptr++; nie dziala 
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+
 void array_func(int array[4])
 {
 array[3] = 5;	//a int array[] w tym kontekscie to wlasciwie to samo co *
 }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
 
 void array_multi_func(int (*arr)[2][2], const int dim1, const int dim2, const int dim3)
 {
@@ -37,10 +48,16 @@ void array_multi_func(int (*arr)[2][2], const int dim1, const int dim2, const in
     
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+
 void czar(char c)
 {
 	c= 'd'	;
 }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
 
 void czar_ref(char* d)
 {
@@ -48,10 +65,15 @@ void czar_ref(char* d)
 	*d= 'e'	;
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+
 void strnig_fun_ref(char* string_ref)
 {																																
 	string_ref[0]='P';	
 }																										
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
 
 void sort(char** string_database, int n)  //to co dostajmey to &string_database[0] (WSKAŹNIK NA POCZĄTEK TABLICY WSKAZNIKOW NA STRINGI) 
@@ -73,6 +95,7 @@ void sort(char** string_database, int n)  //to co dostajmey to &string_database[
     string_database[0]="Grzegorz Floryda";  //mozna zmieniac
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
 
 	typedef struct Person 
@@ -92,6 +115,7 @@ void STRUCT_sredia (Person a, Person b)
 	printf("y: %f\n\n", Personmid_temp.y);
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
 
 void STRUCT_sredia_ref(const Person* a, const Person* b, Person* Personmid_mid)
@@ -100,6 +124,7 @@ void STRUCT_sredia_ref(const Person* a, const Person* b, Person* Personmid_mid)
 	Personmid_mid->y = (a->y + b->y)/2;
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -109,20 +134,23 @@ void STRUCT_sredia_ref(const Person* a, const Person* b, Person* Personmid_mid)
 
 int main()
 {
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
 	//Przekazywanie int 
 	
 	int intiger = 5;
 	printf("%d\n", intiger);
 	intiger_func(intiger);
 	printf("%d\n\n", intiger);
-	
+//--------------------------------------------------------------------------------------------------------------------------------------------	
 	//Przekazywanie int z referencją
 	
 	int intiger_ref = 5;
 	printf("%d\n", intiger_ref);
 	intiger_ref_func(&intiger_ref);
 	printf("%d\n\n", intiger_ref);
-	
+
+//--------------------------------------------------------------------------------------------------------------------------------------------	
 	//Przekazywanie array NIE DA SIE BEZ REFERENCJI
 	
 	//Przekazywanie array int z referencją
@@ -131,7 +159,8 @@ int main()
 	printf("%d\n", array[3]);
 	array_func(array);      //a no zmienia się dlatego że array to adres pierwszego elemnu w tabliy ->cdn w funkcji
 	printf("%d\n\n", array[3]);
-	
+
+//--------------------------------------------------------------------------------------------------------------------------------------------	
 	//Przekazywanie WIELOWYMIAROWEJ array int z referencją
 	int arr[3][2][2]={0,1,2,3,4,5,6,7,8,9,3,2};
 	
@@ -150,6 +179,8 @@ int main()
 		}
 		printf("\n");
 	}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------	
 	
 	array_multi_func(arr,3+1,2+1,2+1);   //+1 bo zaczynamy liczenie od 0
 	
@@ -170,20 +201,25 @@ int main()
 		printf("\n");
 	}
 	
-	
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
 	//Przekazywanie char
 
 	char c = 'c';
 	printf("%c\n", c);
 	czar(c);
 	printf("%c\n\n", c);
-	
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
 	//Przekazywanie char z referencją
 	
 	char d = 'd';
 	printf("%c\n", d);
 	czar_ref(&d);
 	printf("%c\n\n", d);
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
 	//Przekazywanie string  //string to tablica so nie ma jak jej przekazać bez referencji
 
@@ -193,6 +229,8 @@ int main()
 	printf("%s\n", string_ref);
 	strnig_fun_ref(string_ref);  //string ref jest rzutowany na wskaznikiem   
 	printf("%s\n\n",string_ref);
+
+//--------------------------------------------------------------------------------------------------------------------------------------------	
 	
 	//Przekazywanie array string z referencją
 	
@@ -204,6 +242,8 @@ int main()
     sort(string_database, 4);  // string_database oznacza tyle samo co &string_database[0] czyli wskazuje na wskaźnik wskasujący na F w napisie "Florida> cdn w funkcji
 	printf("String: %s\n", string_database[0]);
 	
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
 	//Przesylanie STRUCT bez referencji
 	
 	  Person person1;
@@ -218,7 +258,9 @@ int main()
 	  printf("y: %f\n\n", person2.y);
 		
 	  STRUCT_sredia ( person1 , person2 );
-	  
+
+//--------------------------------------------------------------------------------------------------------------------------------------------	
+
 	  //Przesyłanie STRUCT Z REFERENCJĄ
 	  
 	Person Person_mid;
