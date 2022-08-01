@@ -80,7 +80,8 @@ void sort(char** string_database, int n)  //to co dostajmey to &string_database[
 {  //w skrócie jak to wygląda:
 // string_database - pierwszy element tablicy wskaznikow (czyli wskaznik)
 // *string_database - Dereferencja wskaznika czyli mamy adres w formie jakiegos long intigera
-// **string_database - Druga dereferencja tego wskaznika dająca nam już F w napisie "Florida" czyli tak jakby dokopaliśmy się do elementu [0][0] w dwu wymiarowej tablicy, możemy zacząć działać
+// **string_database - Druga dereferencja tego wskaznika dająca nam już F w napisie "Florida" czyli tak jakby dokopaliśmy się do elementu [0][0] 
+//w dwu wymiarowej tablicy, możemy zacząć działać.
 
 
    printf(" %c\n\n", **string_database); //F w napisie "Florida" czyli element [0][0]
@@ -157,7 +158,7 @@ int main()
 	
 	int array[] = {1,2,3,4,5};
 	printf("%d\n", array[3]);
-	array_func(array);      //a no zmienia się dlatego że array to adres pierwszego elemnu w tabliy ->cdn w funkcji
+	array_func(array);      
 	printf("%d\n\n", array[3]);
 
 //--------------------------------------------------------------------------------------------------------------------------------------------	
@@ -180,7 +181,6 @@ int main()
 		printf("\n");
 	}
 
-//--------------------------------------------------------------------------------------------------------------------------------------------	
 	
 	array_multi_func(arr,3+1,2+1,2+1);   //+1 bo zaczynamy liczenie od 0
 	
@@ -234,12 +234,14 @@ int main()
 	
 	//Przekazywanie array string z referencją
 	
-    char* string_database[4];  //dlaczego nie char string_database[4]? bo w zasadzie to robisz coś takiego string_database[wskaźniki na początki stringów] czyli tablice 4 wskaźników a KAŻDY z nich wskazuje na ADRES POCZĄTKU STRINGA
+    char* string_database[4];  //dlaczego nie char string_database[4]? bo w zasadzie to robisz coś takiego string_database[wskaźniki na początki 
+	//stringów] czyli tablice 4 wskaźników a KAŻDY z nich wskazuje na ADRES POCZĄTKU STRINGA
     string_database[0]="Florida"; 
     string_database[1]="Oregon";
     string_database[2]="Californiaa";
     string_database[3]="Georgia";
-    sort(string_database, 4);  // string_database oznacza tyle samo co &string_database[0] czyli wskazuje na wskaźnik wskasujący na F w napisie "Florida> cdn w funkcji
+    sort(string_database, 4);  // string_database oznacza tyle samo co &string_database[0] czyli wskazuje na wskaźnik wskasujący na F w napisie
+	// "Florida> cdn w funkcji
 	printf("String: %s\n", string_database[0]);
 	
 //--------------------------------------------------------------------------------------------------------------------------------------------
