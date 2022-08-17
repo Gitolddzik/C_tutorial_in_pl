@@ -10,6 +10,7 @@ https://www.geeksforgeeks.org/c-programming-language/?ref=ghm
 
 _____________________________________________________________________________________
 Poitery Alokacja Pamiec Stack Heap :wytłumaczone
+
 https://www.youtube.com/watch?v=_8-ht2AKyH4
 _______________________________________________________________________________________
 
@@ -38,22 +39,6 @@ printf("%#X",x)   //wynik: 0x4D2
 
 printf("%p",x)    //wynik: adres x
 
-______________________________________________________________________________________
-
-Jaka jest roznica między char* a = "..."   A  char a[] = "..."
-
-char* a = "Hello, World!"; //Works
-char b[] = "Hello, World!"; //Works also
-
-strcpy(a, "Hello!"); //Segmentation fault  //nie dziala bo NIE definiujemy tu na nowo a tylko probujemy edytowac pamiec ktora moze byc READ ONLY
-strcpy(b, "Haha!!"); //Works..
-
-char* a = "Haha"; //works
-a = "LOL"; //works..         ///dziala bo nie Edytujemy w zaden sposob pamieci, ktorej na ktora wsakzuje ten wskaznik (A TA MOZE BYC READ ONLY)
-			     //to co tu robimy to definiowanie na nowo a
-
-https://stackoverflow.com/questions/16692887/difference-between-array-and-pointer]
-
 ___________________________________________________________________________________
 
 ŹLE, NIE DZIALA:
@@ -80,6 +65,15 @@ ________________________________________________________________________________
 Memory Padding : Dopełnianie ilości pamięci zarezerwowanej przez struktury do wartości wygodniejszej dla kompilatora
 wytłumaczenie:
 
+1. Kompilator używa następujących zasad przy wyrównywaniu pamięci:
+
+obiekty o rozmiarze jednego bajta trafiają do jakichkolwiek adresów
+obiekty o rozmiarze dwóch bajtów trafiają do adresów które są wielokrotnością dwójki
+obiekty o rozmiarze czterech bajtów trafiają do adresów które są wielokrotnością czwórki
+obiekty o rozmiarze ośmiu bajtów trafiają do adresów które są wielokrotnością ósem
+
+Zgodnie z zasadami, z jakimi kompilator umieszcza obiekty w pamięci, adres musi być wielokrotnością czwórki.
+
 https://bulldogjob.pl/readme/wyrownanie-pamieci-w-strukturach-c
 
 _______________________________________________________________________________________
@@ -94,12 +88,48 @@ dobra obsługa printf
 
 https://www.tutorialspoint.com/c_standard_library/c_function_printf.htm
 
+dobra obsługa stringów
+
+https://beginnersbook.com/2014/01/c-strings-string-functions/
 _______________________________________________________________________________________
 
 Różnica między wskażnikiem na funkcje, który zwraca int A funkcją która zwraca wskaźnik na int
 
-int(*function)(int,int)
-int*function(int,int)
+int (*function)(int,int)
+int* function(int,int)
+
+po co uzywac wskazniki na funkcje? do upraszczania kodu:
+
+#include <stdio.h>
+void add(int a, int b)
+{
+    printf("Addition is %d\n", a+b);
+}
+void subtract(int a, int b)
+{
+    printf("Subtraction is %d\n", a-b);
+}
+void multiply(int a, int b)
+{
+    printf("Multiplication is %d\n", a*b);
+}
+  
+int main()
+{
+    // fun_ptr_arr is an array of function pointers
+    void (*fun_ptr_arr[])(int, int) = {add, subtract, multiply};
+    unsigned int ch, a = 15, b = 10;
+  
+    printf("Enter Choice: 0 for add, 1 for subtract and 2 "
+            "for multiply\n");
+    scanf("%d", &ch);
+  
+    if (ch > 2) return 0;
+  
+    (*fun_ptr_arr[ch])(a, b);
+  
+    return 0;
+}
 
 ________________________________________________________________________________________
 
@@ -129,8 +159,8 @@ DUZYINT liczba = 640430;
 
 PUNKT P;
 
-p.X=6;
-p.Y=7;
+P.X=6;
+P.Y=7;
 
 }
 
@@ -138,8 +168,8 @@ ________________________________________________________________________________
 
 Jaka jest różnica między
 
-char a[] = "string";
 char *p = "string";
+char a[] = "string";
 
 ba są wyraźnie różne, na początek:
 
@@ -153,7 +183,7 @@ Tworzy tablicę, która jest wystarczająco duża, aby utrzymać ciąg znaków l
 
 Wersja wskaźnika:
 char *p  = "string"; 
-Tworzy wskaźnik wskazujący na ciąg znaków "string". Jest to szybsze niż wersja tablicy, ale string wskazywany przez wskaźnik nie powinien być zmieniono , ponieważ znajduje się w pamięci zdefiniowanej tylko do odczytu. Modyfikowanie takiego ciągu literalnego skutkuje niezdefiniowanym zachowaniem.
+Tworzy wskaźnik wskazujący na ciąg znaków "string". Jest to szybsze niż wersja tablicy, ale string wskazywany przez wskaźnik nie powinien być zmieniany , ponieważ znajduje się w pamięci zdefiniowanej tylko do odczytu. Modyfikowanie takiego ciągu literalnego skutkuje niezdefiniowanym zachowaniem.
 
 W rzeczywistości C++03 deprecates [Ref 1] use of string literal without the const keyword. Więc deklaracja powinna brzmieć:
 
@@ -169,7 +199,7 @@ jeśli chcesz zmienić dane, użyj wersji tablicy.
 _______________________________________________________________________________________
 
 
-Różnica między: char *(arr[5]) A char (*arr)[5]
+Różnica między: char* (arr[5]) A char (*arr)[5]
 
 char *(arr[5]) equals to char *arr[5] and it means you have array of pointers
  that each of them points to a character so arr[0] can points to a character and
@@ -190,4 +220,28 @@ char str[5] = "Hell";
 arr = &str;
 printf("%s\n",*arr);
 _________________________________________________________________________________________
+
+STRUCT definiowanie wskaźnika na struct 2 takie same sposoby:
+
+typedef struct punkt
+{
+	int x;
+	int y;
+};
+typedef struct punkt *punkt_ptr;
+
+typedef struct
+{
+	int x;
+	int y;
+} *punkt_ptr;
+
+_________________________________________________________________________________________
+
+ALOKACJA skąd free() wie ile pamięci ma zwlonić?
+
+https://stackoverflow.com/questions/1518711/how-does-free-know-how-much-to-free
+
+_________________________________________________________________________________________
+
 
