@@ -244,4 +244,25 @@ https://stackoverflow.com/questions/1518711/how-does-free-know-how-much-to-free
 
 _________________________________________________________________________________________
 
+DEC BIN szybka konwersja w priintf
+
+int a = 13;
+    
+    printf("Decimal: %d\n", a);
+    printf("Hexadecimal: %08x\n", a);
+    printf("Octal: %011o\n", a);
+    
+    printf("Binary: ");
+    long long i, j;
+    for (i = 0; i < sizeof(int); i++) 
+    {
+        char byte = ((char*)&a)[i];
+        for (j = 7; j >= 0; j--) 
+	{
+            char bit = (byte >> j) & 1;
+            printf("%hhd", bit);
+        }
+        printf(" ");
+    }
+printf("\n");
 
