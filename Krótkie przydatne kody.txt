@@ -39,6 +39,12 @@ printf("%#X",x)   //wynik: 0x4D2
 
 printf("%p",x)    //wynik: adres x
 
+__________________________________
+
+sprintf vs snprintf
+
+https://stackoverflow.com/questions/7505500/snprintf-and-sprintf-explanation
+
 ___________________________________________________________________________________
 
 ŹLE, NIE DZIALA:

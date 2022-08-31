@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+ int i;
+
+int main(int argc, char* argv[]) 
+{
+    int id = fork();
+    int n;
+
+    if (id == 0) 
+        n = 1;
+    else 
+        n = 6;
+
+    if(id != 0) //jesli jestesmy w glownym procesie
+        wait(NULL); //czekaj na to az Child proces skoczny swoja prace;
+    
+    
+   
+    for (i = n; i < n + 5; i++) //wypisujemy w zaleznosci od procesu inne liczby
+    {
+        printf("%d ", i);
+        fflush(stdout);
+    }
+    
+
+    return 0;
+}

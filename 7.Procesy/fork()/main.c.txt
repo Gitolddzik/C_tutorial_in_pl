@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main()
+{
+    int id = fork(); //2 procesy
+    //fork(); 4 procesy
+    //fork(); 8 procesow
+    //fork(); 16 procesow
+
+    printf("Hello World id procesu: %d\n", id);
+
+    if(id==0)
+        printf("im in the child process\n");
+    else
+        printf("im in the main process\n");
+
+    printf("\n\n");
+
+
+    //fajne, a jak zrobic np tylko 1 proces?
+
+    
+    
+
+
+    return 0;
+}
