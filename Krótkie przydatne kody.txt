@@ -1,4 +1,4 @@
-DOKUMANTACJA C :)
+DOKUMANTACJA C ;)
 
 https://cpp0x.pl/dokumentacja/standard-C/1
 
